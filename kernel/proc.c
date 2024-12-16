@@ -312,6 +312,9 @@ fork(void)
 
   pid = np->pid;
 
+  //copy parent trace status
+  np->trace = p->trace;
+
   release(&np->lock);
 
   acquire(&wait_lock);
