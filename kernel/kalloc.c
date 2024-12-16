@@ -91,3 +91,18 @@ kalloc(void)
   return (void*)r;
 }
 
+int
+getfreemen(void){
+  struct run* r;
+  int freepages = 0;
+
+  acquire(&kmem.lock);
+  r = kmem.freelist;
+  while(r){
+    freepages++;
+    r = r->next;
+  }
+  release(&kmem.lock);
+
+  return freepages * PGSIZE;
+}
